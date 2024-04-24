@@ -41,7 +41,7 @@
   }
   
   .floatingclicktext:not([crit]){
-    animation: up 3s;
+    animation: up 4s;
   }
   
   .floatingclicktext[crit]{
@@ -51,9 +51,14 @@
   @keyframes up {
     0% {
       transform: scale(0) translateY(0%);
-      visibility: visible;
+      visibility: hidden;
       opacity: 0;
     }
+    1% {
+        transform: scale(0) translateY(0%);
+        visibility: visible;
+        opacity: 0;
+      }
     10% {
       opacity: 1;
       transform: scale(1) translateY(-50%);
@@ -61,6 +66,7 @@
     100% {
       transform: translateY(-300%) rotateZ(15deg);
       opacity: 0;
+      visibility: hidden;
     }
   }
   
