@@ -1,7 +1,8 @@
 import "./VisualScore.css"
 
-const VisualScore = () => {
-    return (<div></div>)
+const VisualScore = ({className, value}) => {
+
+    return (<div className={className}>+{value}</div>)
 }
 
 export default VisualScore

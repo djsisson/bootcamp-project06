@@ -1,0 +1,81 @@
+.floatingclickcontainer {
+    position: absolute;
+    display: inline-block;
+    top: 40%;
+    left: 15%;
+  }
+  
+  .floatingcpscontainer {
+    position: absolute;
+    display: inline-block;
+    top: 40%;
+    right: 20%;
+  }
+  
+  .floatingcpstext {
+    position: absolute;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    animation-iteration-count: 1;
+    transform-origin: center;
+    color: var(--customtheme);
+    visibility: hidden;
+  }
+  
+  .floatingcpstext:not([crit]){
+    animation: up 3s;
+  }
+  
+  .floatingcpstext[crit]{
+    animation: crit 3s;
+  }
+  
+  .floatingclicktext {
+    position: absolute;
+    display: inline-block;
+    top: 40%;
+    left: 15%;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    animation-iteration-count: 1;
+    transform-origin: center;
+    color: var(--customtheme);
+  }
+  
+  .floatingclicktext:not([crit]){
+    animation: up 3s;
+  }
+  
+  .floatingclicktext[crit]{
+    animation: crit 3s;
+  }
+  
+  @keyframes up {
+    0% {
+      transform: scale(0) translateY(0%);
+      visibility: visible;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1) translateY(-50%);
+    }
+    100% {
+      transform: translateY(-300%) rotateZ(15deg);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes crit {
+    0% {
+      transform: scale(0) translateY(0%);
+      visibility: visible;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1) translateY(50%);
+    }
+    100% {
+      transform: scale(4) translateY(100%) rotateZ(15deg);
+      opacity: 0;
+    }
+  }

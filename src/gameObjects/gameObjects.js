@@ -243,7 +243,7 @@ const gameObjects = {
   ],
 };
 
-const gamestate = {
+const gameState = {
   playername: "",
   gamestats: {
     currentscore: 0,
@@ -261,4 +261,4 @@ const gamestate = {
   inventory: [],
 };
 
-export default { gameObjects, gamestate };
+export default { gameObjects, gameState };
