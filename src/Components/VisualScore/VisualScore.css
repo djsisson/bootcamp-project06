@@ -32,8 +32,8 @@
   .floatingclicktext {
     position: absolute;
     display: inline-block;
-    top: 40%;
-    left: 15%;
+    top: calc(40% + var(--rndTop));
+    left: calc(15% + var(--rndLeft));
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-iteration-count: 1;
     transform-origin: center;
