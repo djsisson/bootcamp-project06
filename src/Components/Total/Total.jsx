@@ -1,7 +1,7 @@
 import "./Total.css"
 
 const Total = () => {
-    return (<div></div>)
+    return (<div className = "total">Total</div>)
 }
 
 export default Total

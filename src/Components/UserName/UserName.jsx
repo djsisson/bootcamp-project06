@@ -1,7 +1,7 @@
-import "./UserName.css"
+import "./UserName.css";
 
 const UserName = () => {
-    return (<div></div>)
-}
+  return <div>Username</div>;
+};
 
-export default UserName
+export default UserName;

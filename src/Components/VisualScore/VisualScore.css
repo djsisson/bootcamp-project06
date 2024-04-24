@@ -1,10 +1,3 @@
-.floatingclickcontainer {
-    position: absolute;
-    display: inline-block;
-    top: 40%;
-    left: 15%;
-  }
-  
   .floatingcpscontainer {
     position: absolute;
     display: inline-block;

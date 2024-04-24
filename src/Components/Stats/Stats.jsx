@@ -1,7 +1,7 @@
 import "./Stats.css"
 
 const Stats = () => {
-    return (<div></div>)
+    return (<div>Stats</div>)
 }
 
 export default Stats

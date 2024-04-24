@@ -1,7 +1,7 @@
 import "./Theme.css"
 
 const Theme = () => {
-    return (<div></div>)
+    return (<div>Theme</div>)
 }
 
 export default Theme

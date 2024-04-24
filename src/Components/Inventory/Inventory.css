@@ -1,0 +1,7 @@
+.inventory{
+    grid-area: 4 / -2 / -2 / -1;
+    border-width: 5px;
+    border-style: outset;
+    border-right: none;
+    padding: 10px;
+}

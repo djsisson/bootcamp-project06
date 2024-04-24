@@ -1,3 +1,8 @@
 .footer{
     grid-area: -1 / 1 / -1 / -1;
+    display: flex;
+    justify-content: space-between;
+    border-top-width: 5px;
+    border-top-style: outset;
+    padding: 10px;
 }

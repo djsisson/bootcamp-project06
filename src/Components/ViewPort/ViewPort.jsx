@@ -10,12 +10,17 @@ const ViewPort = () => {
   const onClick = async (e) => {
     e.target.classList.toggle("shake");
 
-    setClickValues(x => [...x, { id: nextId, value: nextId }]);
-    setNextId(x => x + 1);
-    setTimeout(()=> {setClickValues(x => x.filter((i) => i.id != nextId))},3000)
+    setClickValues((x) => [...x, { id: nextId, value: nextId }]);
+    setNextId((x) => (x + 1) % 100);
+    await delay(3000);
+    setClickValues((x) => x.filter((i) => i.id != nextId));
   };
 
-
+  const delay = (ms) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  };
 
   return (
     <div className="viewport">
@@ -30,7 +35,6 @@ const ViewPort = () => {
       })}
 
       <div className="asteroid" onClick={onClick}></div>
-      
     </div>
   );
 };

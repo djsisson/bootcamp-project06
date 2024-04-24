@@ -1,0 +1,7 @@
+.shop{
+    grid-area: 2 / -2 / 4 / -1;
+    border-width: 5px;
+    border-style: outset;
+    border-right: none;
+    padding: 10px;
+}

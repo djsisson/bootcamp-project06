@@ -1,0 +1,10 @@
+.total {
+    grid-area: -3/2/-3/-2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-width: 5px;
+    border-style: outset;
+    padding: 10px;
+  }

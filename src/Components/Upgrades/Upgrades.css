@@ -1,0 +1,7 @@
+.upgrades {
+  grid-area: 2 / 1 / 4 / 2;
+  border-width: 5px;
+  border-style: outset;
+  border-left: none;
+  padding: 10px;
+}

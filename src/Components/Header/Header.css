@@ -1,3 +1,8 @@
-.header{
-    grid-area: 1 / 1 / 1 / -1;
+.header {
+  grid-area: 1 / 1 / 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  border-bottom-width: 5px;
+  border-bottom-style: outset;
+  padding: 10px;
 }

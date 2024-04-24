@@ -11,6 +11,7 @@
   margin: 0;
   padding: 0;
   font: inherit;
+  border-color: inherit;
 }
 
 /* dark mode user-agent-styles */
@@ -23,6 +24,7 @@ html {
 /* min body height */
 body {
   min-height: 100svh;
+  --bgColor:  aqua;
 }
 
 /* responsive images/videos */
