@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
-import {_gameState, calcdamage} from "../gameObjects/gameObjects.js";
+import {_gameState} from "../gameObjects/gameObjects.js";
 
 const GameStateContext = createContext(null);
 
@@ -39,17 +39,14 @@ function gameStateReducer(gameState, action) {
       const clickToAdd = gameState.gamestats.currentscore + action.value
       return {...gameState, "gamestats": {...gameState.gamestats,"totalclicks": currentClicks + 1,"currentscore": clickToAdd}}
     }
-    case "changed": {
-      return gameState.map((t) => {
-        if (t.id === action.task.id) {
-          return action.task;
-        } else {
-          return t;
-        }
-      });
+    case "buyResearch": {
+      return {...gameState}
     }
-    case "deleted": {
-      return gameState.filter((t) => t.id !== action.id);
+    case "buyUpgrade": {
+      return {...gameState}
+    }
+    case "buyItem": {
+      return {...gameState}
     }
     default: {
       throw Error("Unknown action: " + action.type);

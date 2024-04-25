@@ -1,16 +1,27 @@
-import {useEffect, useState} from "react"
-import "./VisualScore.css"
+import { useEffect } from "react";
+import "./VisualScore.css";
 
-const VisualScore = ({className, value}) => {
-const [rndLeft, setRndLeft] = useState(0)
-const [rndTop, setRndTop] = useState(0)
+const VisualScore = ({ className, x, remove }) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      remove(x.id);
+    }, 3000 + x.delay);
+    return () => clearTimeout(timeout);
+  }, []);
 
-useEffect(() => {
-    setRndLeft(Math.floor(Math.random() * 40 - 20))
-    setRndTop(Math.floor(Math.random() * 40 - 20))
-}, [])
 
-    return (<div className={className} style={{"--rndLeft": `${rndLeft}px`, "--rndTop": `${rndTop}px`}}>+{value}</div>)
-}
+  return (
+    <div
+      className={`${className}${x.crit ? " crit" : ""}`}
+      style={{
+        "--rndLeft": `${x.rndLeft}px`,
+        "--rndTop": `${x.rndTop}px`,
+        "--delay": `${x.delay}ms`,
+      }}
+    >
+      +{x.value}
+    </div>
+  );
+};
 
-export default VisualScore
+export default VisualScore;

@@ -269,11 +269,39 @@ const calcdamage = (obj) => {
     totaldamage = totaldamage * (obj.critDamage + 1);
     crit = true;
   }
-  return ({totaldamage, crit});
-}
+  return { totaldamage, crit };
+};
 
-const AverageDamage = (obj) => {
+const averageDamage = (obj) => {
   return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
 };
 
-export { _gameObjects, _gameState, calcdamage, AverageDamage };
+const canBuy = (cost, score, items = [], inven = []) => {
+  let buyItems = true;
+  items.forEach((item) => {
+    let invenItem = inven.find((x) => x.id == item.id);
+    if (invenItem.quantity < item.quantity) {
+      buyItems = false;
+    }
+  });
+  if (cost > score) {
+    buyItems = false;
+  }
+  return buyItems;
+};
+
+const hasResearch = (currentResearch = [], requireResearch = []) => {
+  let checkForResearch = requireResearch.filter((x) =>
+    !currentResearch.includes(x)
+  );
+  return (checkForResearch.length == 0);
+};
+
+export {
+  _gameObjects,
+  _gameState,
+  calcdamage,
+  averageDamage,
+  canBuy,
+  hasResearch,
+};

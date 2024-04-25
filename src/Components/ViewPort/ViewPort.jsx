@@ -11,24 +11,31 @@ const ViewPort = () => {
   const [clickValues, setClickValues] = useState([]);
   const [nextId, setNextId] = useState(0);
   const dispatch = useGameStateDispatch();
-  const gamestate = useGameState().clickstats
+  const gamestate = useGameState().clickstats;
+
   const onClick = async (e) => {
     e.target.classList.toggle("shake");
     const getCalcDamage = calcdamage(gamestate);
-    setClickValues((x) => [...x, { id: nextId, value: getCalcDamage }]);
+    setClickValues((x) => [
+      ...x,
+      {
+        id: nextId,
+        crit: getCalcDamage.crit,
+        value: getCalcDamage.totaldamage,
+        rndLeft: Math.floor(Math.random() * 40 - 20),
+        rndTop: Math.floor(Math.random() * 40 - 20),
+        delay: 0,
+      },
+    ]);
     setNextId((x) => (x + 1) % 100);
     dispatch({
       type: "click",
       value: getCalcDamage.totaldamage,
     });
-    await delay(3000);
-    setClickValues((x) => x.filter((i) => i.id != nextId));
   };
 
-  const delay = (ms) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
+  const removeClickValue = (id) => {
+    setClickValues((x) => x.filter((i) => i.id != id));
   };
 
   return (
@@ -37,9 +44,9 @@ const ViewPort = () => {
         return (
           <VisualScore
             className="floatingclicktext"
-            value={x.value.totaldamage}
-            crit={x.value.crit}
+            x={x}
             key={x.id}
+            remove={removeClickValue}
           />
         );
       })}

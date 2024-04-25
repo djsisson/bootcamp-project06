@@ -1,7 +1,17 @@
-import "./Button.css"
+import "./Button.css";
+import {
+  useGameState,
+  useGameStateDispatch,
+} from "../../Context/gameStateContext.jsx";
 
-const Button = () => {
-    return (<button></button>)
-}
+const Button = ({ c, x }) => {
+  const gameStateDispatch = useGameStateDispatch();
 
-export default Button
+  const onClick = (e) => {
+    console.log(e);
+  };
+
+  return <button onClick={onClick}>{x.name}</button>;
+};
+
+export default Button;

@@ -21,40 +21,42 @@
   .floatingcpstext[crit]{
     animation: crit 3s;
   }
+
+
   
   .floatingclicktext {
     position: absolute;
     display: inline-block;
     top: calc(40% + var(--rndTop));
     left: calc(15% + var(--rndLeft));
+    visibility: hidden;
+    opacity: 0;
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-iteration-count: 1;
-    visibility: hidden;
+    animation-duration: 3s;
+    animation-delay: var(--delay);
+    animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    animation-name: up;
     transform-origin: center;
     color: var(--customtheme);
   }
   
-  .floatingclicktext:not([crit]){
-    animation: up 3s;
-  }
-  
   .floatingclicktext[crit]{
-    animation: crit 3s;
+    animation-name: crit;
   }
   
   @keyframes up {
     0% {
         transform: scale(0) translateY(0%);
         visibility: visible;
-        opacity: 0;
       }
     10% {
       opacity: 1;
-      transform: scale(1) translateY(-100%);
+      transform: scale(2) translateY(-100%);
     }
     100% {
-      transform: translateY(-1000%) rotateZ(15deg);
+      transform: translateY(-1000%) rotateZ(15deg) scale(1);
       opacity: 0;
       visibility: hidden;
     }
@@ -64,14 +66,14 @@
     0% {
       transform: scale(0) translateY(0%);
       visibility: visible;
-      opacity: 0;
     }
     10% {
       opacity: 1;
-      transform: scale(1) translateY(50%);
+      transform: scale(2) translateY(50%);
     }
     100% {
       transform: scale(4) translateY(100%) rotateZ(15deg);
       opacity: 0;
+      visibility: hidden;
     }
   }
