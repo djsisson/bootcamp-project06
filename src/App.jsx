@@ -6,19 +6,22 @@ import Research from "./Components/Research/Research.jsx";
 import Shop from "./Components/Shop/Shop.jsx";
 import ViewPort from "./Components/ViewPort/ViewPort.jsx";
 import Total from "./Components/Total/Total.jsx";
+import { GameStateProvider } from "./Context/gameStateContext.jsx";
 import "./App.css";
 
 function App() {
   return (
     <div className="mainApp">
-      <Header />
-      <Upgrades />
-      <Research />
-      <Shop />
-      <Inventory />
-      <ViewPort />
-      <Total />
-      <Footer />
+      <GameStateProvider>
+        <Header />
+        <Upgrades />
+        <Research />
+        <Shop />
+        <Inventory />
+        <ViewPort />
+        <Total />
+        <Footer />
+      </GameStateProvider>
     </div>
   );
 }

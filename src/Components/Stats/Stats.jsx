@@ -1,7 +1,17 @@
-import "./Stats.css"
+import "./Stats.css";
+import { useGameState } from "../../Context/gameStateContext.jsx";
+import { AverageDamage } from "../../gameObjects/gameObjects.js";
 
 const Stats = () => {
-    return (<div>Stats</div>)
-}
+  const gameState = useGameState();
+  return (
+    <div className="stats">
+      <div>Total Clicks: {gameState.gamestats.totalclicks}</div>
+      <div>Total Spent: {gameState.gamestats.totalspent}</div>
+      <div>Average Click Value: {AverageDamage(gameState.clickstats)}</div>
+      <div>Average CPS Value: {gameState.gamestats.currentAveragecps}</div>
+    </div>
+  );
+};
 
-export default Stats
+export default Stats;

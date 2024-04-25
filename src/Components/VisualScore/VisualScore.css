@@ -29,12 +29,14 @@
     left: calc(15% + var(--rndLeft));
     animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
     animation-iteration-count: 1;
+    visibility: hidden;
+    animation-fill-mode: forwards;
     transform-origin: center;
     color: var(--customtheme);
   }
   
   .floatingclicktext:not([crit]){
-    animation: up 4s;
+    animation: up 3s;
   }
   
   .floatingclicktext[crit]{
@@ -43,21 +45,16 @@
   
   @keyframes up {
     0% {
-      transform: scale(0) translateY(0%);
-      visibility: hidden;
-      opacity: 0;
-    }
-    1% {
         transform: scale(0) translateY(0%);
         visibility: visible;
         opacity: 0;
       }
     10% {
       opacity: 1;
-      transform: scale(1) translateY(-50%);
+      transform: scale(1) translateY(-100%);
     }
     100% {
-      transform: translateY(-300%) rotateZ(15deg);
+      transform: translateY(-1000%) rotateZ(15deg);
       opacity: 0;
       visibility: hidden;
     }

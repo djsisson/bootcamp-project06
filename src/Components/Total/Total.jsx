@@ -1,7 +1,10 @@
 import "./Total.css"
 
+import { useGameState } from "../../Context/gameStateContext.jsx";
+
 const Total = () => {
-    return (<div className = "total">Total</div>)
+    const gameState = useGameState().gamestats
+    return (<div className = "total">Total: {gameState.currentscore}</div>)
 }
 
 export default Total

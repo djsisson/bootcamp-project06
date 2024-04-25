@@ -1,4 +1,4 @@
-const gameObjects = {
+const _gameObjects = {
   upgrades: [
     {
       id: 0,
@@ -243,8 +243,9 @@ const gameObjects = {
   ],
 };
 
-const gameState = {
+const _gameState = {
   playername: "",
+  theme: "",
   gamestats: {
     currentscore: 0,
     totalclicks: 0,
@@ -261,4 +262,18 @@ const gameState = {
   inventory: [],
 };
 
-export default { gameObjects, gameState };
+const calcdamage = (obj) => {
+  let totaldamage = obj.baseValue;
+  let crit = false;
+  if (Math.random() < obj.critChance) {
+    totaldamage = totaldamage * (obj.critDamage + 1);
+    crit = true;
+  }
+  return ({totaldamage, crit});
+}
+
+const AverageDamage = (obj) => {
+  return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
+};
+
+export { _gameObjects, _gameState, calcdamage, AverageDamage };
