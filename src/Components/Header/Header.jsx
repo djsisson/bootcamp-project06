@@ -1,5 +1,6 @@
 import "./Header.css";
 import UserName from "../UserName/UserName.jsx";
+import Reset from "../Reset/Reset.jsx";
 import Theme from "../Theme/Theme.jsx";
 
 const Header = () => {
@@ -7,6 +8,7 @@ const Header = () => {
     <header className="header">
       <h1>Header</h1>
       <UserName />
+      <Reset />
       <Theme />
     </header>
   );

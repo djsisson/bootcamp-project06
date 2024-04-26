@@ -4,10 +4,17 @@
   border-style: outset;
   border-left: none;
   padding: 10px;
+  overflow-y: auto;
 }
 
 .researchContainer{
   display: grid;
   gap: 1rem;
   padding: 1rem;
+  
+}
+
+.reasearchTitle{
+  position: sticky;
+  top: 0;
 }

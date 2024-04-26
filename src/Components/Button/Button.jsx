@@ -4,14 +4,18 @@ import {
   useGameStateDispatch,
 } from "../../Context/gameStateContext.jsx";
 
-const Button = ({ c, x }) => {
+const Button = ({ b, c, x, f }) => {
   const gameStateDispatch = useGameStateDispatch();
 
   const onClick = (e) => {
-    console.log(e);
+    f(x);
   };
 
-  return <button onClick={onClick}>{x.name}</button>;
+  return (
+    <button disabled={c || b} onClick={onClick}>
+      {x.name}
+    </button>
+  );
 };
 
 export default Button;

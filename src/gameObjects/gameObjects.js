@@ -253,12 +253,12 @@ const _gameState = {
     currentAveragecps: 0,
   },
   clickstats: {
-    baseValue: 1,
+    baseValue: 10,
     critChance: 0,
     critDamage: 0.5,
   },
   researched: [],
-  upgrades: [{ id: 0, level: 0 }],
+  upgrades: [],
   inventory: [],
 };
 
@@ -280,7 +280,7 @@ const canBuy = (cost, score, items = [], inven = []) => {
   let buyItems = true;
   items.forEach((item) => {
     let invenItem = inven.find((x) => x.id == item.id);
-    if (invenItem.quantity < item.quantity) {
+    if (invenItem ? invenItem.quantity < item.quantity : true) {
       buyItems = false;
     }
   });
@@ -291,10 +291,10 @@ const canBuy = (cost, score, items = [], inven = []) => {
 };
 
 const hasResearch = (currentResearch = [], requireResearch = []) => {
-  let checkForResearch = requireResearch.filter((x) =>
-    !currentResearch.includes(x)
+  let checkForResearch = requireResearch.filter(
+    (x) => !currentResearch.includes(x)
   );
-  return (checkForResearch.length == 0);
+  return checkForResearch.length == 0;
 };
 
 export {
