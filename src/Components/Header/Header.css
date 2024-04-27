@@ -6,4 +6,8 @@
   border-bottom-style: outset;
   padding: 10px;
   border-color: var(--bgColor);
+  align-items: center;
+}
+.header > h1{
+  font-size: var(--fs3)
 }

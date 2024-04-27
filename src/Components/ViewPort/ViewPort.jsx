@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import "./ViewPort.css";
 import {
   useGameState,
+  averageDamage,
+  calcdamage,
   useGameStateDispatch,
 } from "../../Context/gameStateContext.jsx";
 import VisualScore from "../VisualScore/VisualScore.jsx";
-import { calcdamage } from "../../gameObjects/gameObjects.js";
 
 const ViewPort = () => {
   const [clickValues, setClickValues] = useState([]);
@@ -26,6 +27,10 @@ const ViewPort = () => {
       }
     });
     refCps.current = newValues;
+    dispatch({
+      type: "updateAverage",
+      value: newValues.reduce((i, x) => i + averageDamage(x), 0),
+    });
   }, [inven]);
 
   useEffect(() => {

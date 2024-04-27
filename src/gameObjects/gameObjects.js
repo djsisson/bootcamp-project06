@@ -256,6 +256,7 @@ const _gameState = {
     totalclicks: 0,
     totalspent: 0,
     currentAveragecps: 0,
+    averageclickvalue: 1,
   },
   clickstats: {
     baseValue: 1,
@@ -267,23 +268,4 @@ const _gameState = {
   inventory: [],
 };
 
-const calcdamage = (obj) => {
-  let totaldamage = obj.baseValue;
-  let crit = false;
-  if (Math.random() < obj.critChance) {
-    totaldamage = totaldamage * (obj.critDamage + 1);
-    crit = true;
-  }
-  return { totaldamage, crit };
-};
-
-const averageDamage = (obj) => {
-  return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
-};
-
-export {
-  _gameObjects,
-  _gameState,
-  calcdamage,
-  averageDamage,
-};
+export { _gameObjects, _gameState };

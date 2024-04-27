@@ -5,12 +5,31 @@
   box-sizing: border-box;
 }
 
+:root{
+  --fs1: 1rem;
+  --fs2: 2rem;
+  --fs3: 3rem;
+
+  --clr-1: #052b2f;
+  --clr-2: #073438;
+  --clr-3: #0e4b50;
+  --clr-4: #2d8f85;
+  --clr-5: #637c54;
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 /* remove default spacing */
 /* force styling of type through styling, rather than elements */
 * {
   margin: 0;
   padding: 0;
   font: inherit;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
@@ -59,4 +78,20 @@ li {
 #root{
   width: 100svw;
   height: 100svh;
+}
+
+@media screen and (width < 800px) {
+  :root{
+    --fs1: 0.8rem;
+    --fs2: 1rem;
+    --fs3: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  :root{
+    --fs1: 0.5rem;
+    --fs2: 0.8rem;
+    --fs3: 1rem;
+  }
 }

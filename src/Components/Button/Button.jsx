@@ -3,7 +3,7 @@ import {
   useGameState,
   useGameStateDispatch,
 } from "../../Context/gameStateContext.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useId } from "react";
 
 const Button = ({ type, x }) => {
   const dispatch = useGameStateDispatch();
@@ -15,6 +15,7 @@ const Button = ({ type, x }) => {
   const [canBuy, setCanBuy] = useState(false);
   const [nextLevel, setNextLevel] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const buttonLabel = useId();
 
   useEffect(() => {
     if (type == "Inventory") return;
@@ -48,7 +49,7 @@ const Button = ({ type, x }) => {
       canBuy = false;
     }
     setCanBuy(canBuy);
-  }, [score, inven, nextLevel,quantity]);
+  }, [score, inven, nextLevel, quantity]);
 
   useEffect(() => {
     if (type == "Inventory") return;
@@ -84,7 +85,7 @@ const Button = ({ type, x }) => {
   }, [research, upgrades, inven]);
 
   const onClick = (e) => {
-    setCanBuy(false)
+    setCanBuy(false);
     switch (type) {
       case "Research": {
         dispatch({
@@ -104,7 +105,7 @@ const Button = ({ type, x }) => {
           effecttype: x.type,
           effectid: x.effectitemid,
         });
-        return
+        return;
       }
       case "Shop": {
         dispatch({
@@ -122,9 +123,21 @@ const Button = ({ type, x }) => {
   };
 
   return (
-    <button onClick={onClick} disabled={completed || !canBuy}>
-      {x.name}+{canBuy ? "true" : "false"}+{quantity!=0 ? quantity: "" }
-    </button>
+    <div className="buttonItem">
+      <button
+        id={buttonLabel}
+        title={type}
+        type="button"
+        className={`${type}${canBuy ? " canBuy" : ""}${
+          canBuy ? " completed" : ""
+        }`}
+        onClick={onClick}
+        disabled={completed || !canBuy}
+      ></button>
+      <label htmlFor={buttonLabel}>
+        {x.name}+{canBuy ? "true" : "false"}+{quantity != 0 ? quantity : ""}
+      </label>
+    </div>
   );
 };
 

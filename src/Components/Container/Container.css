@@ -4,6 +4,7 @@
   padding: 10px;
   overflow-y: auto;
   border-color: var(--bgColor);
+  opacity: 0.9;
 }
 
 .Research {
@@ -29,9 +30,12 @@
 .container h1 {
   position: sticky;
   top: 0;
+  text-align: center;
+  font-size: var(--fs3);
+  border-bottom: 2px solid;
 }
 
-.container div {
+.container > div {
   display: grid;
   gap: 1rem;
   padding: 1rem;

@@ -2,10 +2,9 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 import { _gameObjects, _gameState } from "../gameObjects/gameObjects.js";
 
 const GameStateContext = createContext(null);
-
 const GameStateDispatchContext = createContext(null);
 
-export function GameStateProvider({ children }) {
+export const GameStateProvider = ({ children }) => {
   const [gameState, dispatch] = useReducer(gameStateReducer, null, () => {
     const localState = localStorage.getItem("ReactAsteroidMiner");
     return localState ? JSON.parse(localState) : _gameState;
@@ -24,30 +23,45 @@ export function GameStateProvider({ children }) {
   );
 }
 
-export function useGameState() {
+export const useGameState = () => {
   return useContext(GameStateContext);
-}
+};
 
-export function useGameStateDispatch() {
+export const useGameStateDispatch = () => {
   return useContext(GameStateDispatchContext);
-}
+};
 
-function buyItems(items = [], inven = []) {
+const buyItems = (items = [], inven = []) => {
   items.forEach((item) => {
     const itemtoremove = inven.findIndex((x) => x.id == item.id);
-    const newInvenItem = {...inven[itemtoremove]}
-    newInvenItem.quantity -= item.quantity
-    inven[itemtoremove] = {...newInvenItem}
+    const newInvenItem = { ...inven[itemtoremove] };
+    newInvenItem.quantity -= item.quantity;
+    inven[itemtoremove] = { ...newInvenItem };
   });
-}
+};
 
-function upgradeItem(item, stats) {
+const upgradeItem = (item, stats) => {
   item.baseValue += stats.baseValue;
   item.critChance += stats.critChance;
   item.critDamage += stats.critDamage;
-}
+};
 
-function gameStateReducer(gameState, action) {
+export const averageDamage = (stats) => {
+  return (
+    stats.baseValue * stats.critChance * stats.critDamage + stats.baseValue
+  );
+};
+export const calcdamage = (stats) => {
+  let totaldamage = stats.baseValue;
+  let crit = false;
+  if (Math.random() < stats.critChance) {
+    totaldamage = totaldamage * (stats.critDamage + 1);
+    crit = true;
+  }
+  return { totaldamage, crit };
+};
+
+const gameStateReducer = (gameState, action) => {
   const inven = gameState.inventory;
   const stats = gameState.gamestats;
   const research = gameState.researched;
@@ -55,6 +69,7 @@ function gameStateReducer(gameState, action) {
   const clickstats = gameState.clickstats;
 
   switch (action.type) {
+
     case "click": {
       const newStats = { ...stats };
       newStats.totalclicks += 1;
@@ -64,6 +79,7 @@ function gameStateReducer(gameState, action) {
         gamestats: { ...newStats },
       };
     }
+
     case "addCps": {
       const newStats = { ...stats };
       newStats.currentscore += action.value;
@@ -72,10 +88,10 @@ function gameStateReducer(gameState, action) {
         gamestats: { ...newStats },
       };
     }
+
     case "buyResearch": {
-      
       const newStats = { ...stats };
-      const newInven = [ ...inven]
+      const newInven = [...inven];
       buyItems(action.items, newInven);
       newStats.currentscore -= action.cost;
       newStats.totalspent += action.cost;
@@ -88,15 +104,14 @@ function gameStateReducer(gameState, action) {
         inventory: [...newInven],
       };
     }
+
     case "buyUpgrade": {
       const newStats = { ...stats };
       const newUpgrades = [...upgrades];
       const newInven = [...inven];
       const newClickStats = { ...clickstats };
-
       newStats.currentscore -= action.level.cost;
       newStats.totalspent += action.level.cost;
-
       const alreadyUpgrading = newUpgrades.findIndex(
         (x) => x.id == action.value
       );
@@ -107,9 +122,9 @@ function gameStateReducer(gameState, action) {
       } else {
         newUpgrades.push({ id: action.value, level: action.newlevel });
       }
-
       if (action.effecttype == 0) {
         upgradeItem(newClickStats, action.level.upgrade);
+        newStats.averageclickvalue = averageDamage(newClickStats);
       } else {
         const inInventory = newInven.findIndex((x) => x.id == action.effectid);
         if (inInventory != -1) {
@@ -140,6 +155,7 @@ function gameStateReducer(gameState, action) {
         inventory: [...newInven],
       };
     }
+
     case "buyItem": {
       const newStats = { ...stats };
       const newInven = [...inven];
@@ -169,16 +185,19 @@ function gameStateReducer(gameState, action) {
         inventory: [...newInven],
       };
     }
-    case "updateAverage" : {
+
+    case "updateAverage": {
       const newStats = { ...stats };
-      newStats.currentAveragecps = action.value
+      newStats.currentAveragecps = action.value;
       return {
         ...gameState,
         gamestats: { ...newStats },
       };
     }
+
     default: {
       throw Error("Unknown action: " + action.type);
     }
+
   }
-}
+};
