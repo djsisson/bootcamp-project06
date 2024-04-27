@@ -1,79 +1,67 @@
-  .floatingcpscontainer {
-    position: absolute;
-    display: inline-block;
-    top: 40%;
-    right: 20%;
-  }
-  
-  .floatingcpstext {
-    position: absolute;
-    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-    animation-iteration-count: 1;
-    transform-origin: center;
-    color: var(--customtheme);
-    visibility: hidden;
-  }
-  
-  .floatingcpstext:not([crit]){
-    animation: up 3s;
-  }
-  
-  .floatingcpstext[crit]{
-    animation: crit 3s;
-  }
+.floatingtext {
+  position: absolute;
+  display: inline-block;
+  top: calc(40% + var(--rndTop));
+  visibility: hidden;
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  animation-iteration-count: 1;
+  animation-duration: 3s;
+  animation-delay: var(--delay);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  transform-origin: center;
+  color: var(--customtheme);
+}
 
+.floatingtext.click {
+  left: calc(15% + var(--rndLeft));
+  animation-name: up;
+}
 
-  
-  .floatingclicktext {
-    position: absolute;
-    display: inline-block;
-    top: calc(40% + var(--rndTop));
-    left: calc(15% + var(--rndLeft));
-    visibility: hidden;
+.floatingtext.click.crit {
+  left: calc(15% + var(--rndLeft));
+  animation-name: crit;
+}
+
+.floatingtext.cps {
+  right: calc(15% + var(--rndLeft));
+  animation-name: up;
+}
+
+.floatingtext.cps.crit {
+  right: calc(15% + var(--rndLeft));
+  animation-name: crit;
+}
+
+@keyframes up {
+  0% {
+    transform: scale(0) translateY(0%);
+    visibility: visible;
+  }
+  10% {
+    opacity: 1;
+    transform: scale(2) translateY(-100%);
+  }
+  100% {
+    transform: translateY(-1000%) rotateZ(15deg) scale(1);
     opacity: 0;
-    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-    animation-iteration-count: 1;
-    animation-duration: 3s;
-    animation-delay: var(--delay);
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-name: up;
-    transform-origin: center;
-    color: var(--customtheme);
+    visibility: hidden;
   }
-  
-  .floatingclicktext[crit]{
-    animation-name: crit;
+}
+
+@keyframes crit {
+  0% {
+    transform: scale(0) translateY(0%);
+    visibility: visible;
   }
-  
-  @keyframes up {
-    0% {
-        transform: scale(0) translateY(0%);
-        visibility: visible;
-      }
-    10% {
-      opacity: 1;
-      transform: scale(2) translateY(-100%);
-    }
-    100% {
-      transform: translateY(-1000%) rotateZ(15deg) scale(1);
-      opacity: 0;
-      visibility: hidden;
-    }
+  10% {
+    opacity: 1;
+    transform: scale(2) translateY(50%);
   }
-  
-  @keyframes crit {
-    0% {
-      transform: scale(0) translateY(0%);
-      visibility: visible;
-    }
-    10% {
-      opacity: 1;
-      transform: scale(2) translateY(50%);
-    }
-    100% {
-      transform: scale(4) translateY(100%) rotateZ(15deg);
-      opacity: 0;
-      visibility: hidden;
-    }
+  100% {
+    transform: scale(4) translateY(100%) rotateZ(15deg);
+    opacity: 0;
+    visibility: hidden;
   }
+}

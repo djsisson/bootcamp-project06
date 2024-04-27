@@ -37,7 +37,7 @@ const Button = ({ type, x }) => {
         break;
       }
       case "Shop": {
-        calcCost = Math.pow(x.multiplier, quantity);
+        calcCost = x.cost * Math.pow(x.multiplier, quantity);
         break;
       }
       default: {
@@ -48,7 +48,7 @@ const Button = ({ type, x }) => {
       canBuy = false;
     }
     setCanBuy(canBuy);
-  }, [score, inven, nextLevel]);
+  }, [score, inven, nextLevel,quantity]);
 
   useEffect(() => {
     if (type == "Inventory") return;
@@ -84,6 +84,7 @@ const Button = ({ type, x }) => {
   }, [research, upgrades, inven]);
 
   const onClick = (e) => {
+    setCanBuy(false)
     switch (type) {
       case "Research": {
         dispatch({
@@ -109,7 +110,8 @@ const Button = ({ type, x }) => {
         dispatch({
           type: "buyItem",
           value: x.id,
-          cost: Math.pow(x.multiplier, quantity),
+          cost: x.cost * Math.pow(x.multiplier, quantity),
+          items: x.requireditems,
         });
         return;
       }
@@ -121,7 +123,7 @@ const Button = ({ type, x }) => {
 
   return (
     <button onClick={onClick} disabled={completed || !canBuy}>
-      {x.name}+{canBuy ? "true" : "false"}
+      {x.name}+{canBuy ? "true" : "false"}+{quantity!=0 ? quantity: "" }
     </button>
   );
 };

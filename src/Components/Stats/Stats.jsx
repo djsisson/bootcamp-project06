@@ -1,9 +1,27 @@
 import "./Stats.css";
-import { useGameState } from "../../Context/gameStateContext.jsx";
+import {
+  useGameState,
+  useGameStateDispatch,
+} from "../../Context/gameStateContext.jsx";
 import { averageDamage } from "../../gameObjects/gameObjects.js";
+import { useEffect } from "react";
 
 const Stats = () => {
   const gameState = useGameState();
+  const dispatch = useGameStateDispatch();
+  const inven = useGameState().inventory;
+
+  useEffect(() => {
+    const updatedAverageDmg = inven.reduce(
+      (i, x) => i + x.quantity * averageDamage(x.cps),
+      0
+    );
+    dispatch({
+      type: "updateAverage",
+      value: updatedAverageDmg,
+    });
+  }, [inven]);
+
   return (
     <div className="stats">
       <div>Total Clicks: {gameState.gamestats.totalclicks}</div>

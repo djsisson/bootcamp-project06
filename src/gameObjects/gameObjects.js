@@ -258,7 +258,7 @@ const _gameState = {
     currentAveragecps: 0,
   },
   clickstats: {
-    baseValue: 10,
+    baseValue: 1,
     critChance: 0,
     critDamage: 0.5,
   },

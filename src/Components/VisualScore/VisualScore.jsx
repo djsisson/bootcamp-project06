@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./VisualScore.css";
 
-const VisualScore = ({ className, x, remove }) => {
+const VisualScore = ({ className, x, remove, type }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       remove(x.id);
@@ -12,7 +12,7 @@ const VisualScore = ({ className, x, remove }) => {
 
   return (
     <div
-      className={`${className}${x.crit ? " crit" : ""}`}
+      className={`${className} ${type}${x.crit ? " crit" : ""}`}
       style={{
         "--rndLeft": `${x.rndLeft}px`,
         "--rndTop": `${x.rndTop}px`,

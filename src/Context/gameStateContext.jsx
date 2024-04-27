@@ -34,10 +34,10 @@ export function useGameStateDispatch() {
 
 function buyItems(items = [], inven = []) {
   items.forEach((item) => {
-    let itemtoremove = inven.find((x) => x.id == item.id);
-    const newInvenItem = { ...itemtoremove };
-    newInvenItem.quantity -= item.quantity;
-    itemtoremove = { ...newInvenItem };
+    const itemtoremove = inven.findIndex((x) => x.id == item.id);
+    const newInvenItem = {...inven[itemtoremove]}
+    newInvenItem.quantity -= item.quantity
+    inven[itemtoremove] = {...newInvenItem}
   });
 }
 
@@ -64,9 +64,19 @@ function gameStateReducer(gameState, action) {
         gamestats: { ...newStats },
       };
     }
-    case "buyResearch": {
-      buyItems(action.items, inven);
+    case "addCps": {
       const newStats = { ...stats };
+      newStats.currentscore += action.value;
+      return {
+        ...gameState,
+        gamestats: { ...newStats },
+      };
+    }
+    case "buyResearch": {
+      
+      const newStats = { ...stats };
+      const newInven = [ ...inven]
+      buyItems(action.items, newInven);
       newStats.currentscore -= action.cost;
       newStats.totalspent += action.cost;
       return {
@@ -75,7 +85,7 @@ function gameStateReducer(gameState, action) {
         gamestats: {
           ...newStats,
         },
-        inventory: [...inven],
+        inventory: [...newInven],
       };
     }
     case "buyUpgrade": {
@@ -133,6 +143,7 @@ function gameStateReducer(gameState, action) {
     case "buyItem": {
       const newStats = { ...stats };
       const newInven = [...inven];
+      buyItems(action.items, newInven);
       newStats.currentscore -= action.cost;
       newStats.totalspent += action.cost;
       const inInventory = newInven.findIndex((x) => x.id == action.value);
@@ -156,6 +167,14 @@ function gameStateReducer(gameState, action) {
         ...gameState,
         gamestats: { ...newStats },
         inventory: [...newInven],
+      };
+    }
+    case "updateAverage" : {
+      const newStats = { ...stats };
+      newStats.currentAveragecps = action.value
+      return {
+        ...gameState,
+        gamestats: { ...newStats },
       };
     }
     default: {
