@@ -1,0 +1,12 @@
+button[disabled]{
+    background-color: red;
+    cursor: not-allowed;
+}
+
+button:not([disabled]) {
+    cursor: pointer;
+}
+
+button{
+    padding: 10px
+}

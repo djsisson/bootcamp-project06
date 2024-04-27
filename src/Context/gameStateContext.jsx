@@ -32,27 +32,31 @@ export function useGameStateDispatch() {
   return useContext(GameStateDispatchContext);
 }
 
-function buyItem(items = [], inven = []) {
-  const newItems = items.forEach((item) => {
+function buyItems(items = [], inven = []) {
+  items.forEach((item) => {
     let itemtoremove = inven.find((x) => x.id == item.id);
-    itemtoremove.quantity -= item.quantity;
+    const newInvenItem = { ...itemtoremove };
+    newInvenItem.quantity -= item.quantity;
+    itemtoremove = { ...newInvenItem };
   });
-  return newItems || [];
 }
 
 function upgradeItem(item, stats) {
-  const newItem = {
-    baseValue: item.baseValue + stats.baseValue,
-    critChance: item.critChance + stats.critChance,
-    critDamage: item.critDamage + stats.critDamage,
-  };
-  return { ...newItem };
+  item.baseValue += stats.baseValue;
+  item.critChance += stats.critChance;
+  item.critDamage += stats.critDamage;
 }
 
 function gameStateReducer(gameState, action) {
+  const inven = gameState.inventory;
+  const stats = gameState.gamestats;
+  const research = gameState.researched;
+  const upgrades = gameState.upgrades;
+  const clickstats = gameState.clickstats;
+
   switch (action.type) {
     case "click": {
-      const newStats = { ...gameState.gamestats };
+      const newStats = { ...stats };
       newStats.totalclicks += 1;
       newStats.currentscore += action.value;
       return {
@@ -61,75 +65,98 @@ function gameStateReducer(gameState, action) {
       };
     }
     case "buyResearch": {
-      const newInven = buyItem([...action.items], [...gameState.inventory]);
-      const newStats = { ...gameState.gamestats };
+      buyItems(action.items, inven);
+      const newStats = { ...stats };
       newStats.currentscore -= action.cost;
       newStats.totalspent += action.cost;
       return {
         ...gameState,
-        researched: [...gameState.researched, action.value],
+        researched: [...research, action.value],
         gamestats: {
           ...newStats,
         },
-        inventory: [...newInven],
+        inventory: [...inven],
       };
     }
     case "buyUpgrade": {
-      const newStats = { ...gameState.gamestats };
+      const newStats = { ...stats };
+      const newUpgrades = [...upgrades];
+      const newInven = [...inven];
+      const newClickStats = { ...clickstats };
+
       newStats.currentscore -= action.level.cost;
       newStats.totalspent += action.level.cost;
-      const newUpgrades = [...gameState.upgrades];
-      const newInven = [...gameState.inventory];
-      let newClickStats = { ...gameState.clickstats };
+
       const alreadyUpgrading = newUpgrades.findIndex(
         (x) => x.id == action.value
       );
       if (alreadyUpgrading != -1) {
-        newUpgrades.splice(alreadyUpgrading, 1);
+        const newUpgradeItem = { ...newUpgrades[alreadyUpgrading] };
+        newUpgradeItem.level++;
+        newUpgrades[alreadyUpgrading] = { ...newUpgradeItem };
+      } else {
+        newUpgrades.push({ id: action.value, level: action.newlevel });
       }
-      const newInvenItem = {
-        id: action.effectid,
-        quantity: 0,
-        cps: {},
-      };
+
       if (action.effecttype == 0) {
-        newClickStats = upgradeItem(newClickStats, action.level.upgrade);
+        upgradeItem(newClickStats, action.level.upgrade);
       } else {
         const inInventory = newInven.findIndex((x) => x.id == action.effectid);
-        console.log(inInventory);
         if (inInventory != -1) {
-          newInvenItem.qty = newInven[inInventory].quantity;
-          const newCps = {
-            ...upgradeItem(
-              { ...newInven[inInventory].cps },
-              action.level.upgrade
-            ),
-          };
-          newInven.splice(inInventory, 1);
-          newInvenItem.cps = {
-            ...newCps,
-          };
+          const newInvenItem = { ...newInven[inInventory] };
+          const newCps = { ...newInvenItem.cps };
+          upgradeItem(newCps, action.level.upgrade);
+          newInvenItem.cps = { ...newCps };
+          newInven[inInventory] = newInvenItem;
         } else {
-          const findItem = _gameObjects.shopitems.find(
+          const newInvenItem = _gameObjects.shopitems.find(
             (x) => x.id == action.effectid
           );
-          newInvenItem.cps = { ...findItem.cps };
+          const newCps = { ...newInvenItem.cps };
+          upgradeItem(newCps, action.level.upgrade);
+          newInven.push({
+            id: action.effectid,
+            name: newInvenItem.name,
+            quantity: 0,
+            cps: { ...newCps },
+          });
         }
-        newInven.push({ ...newInvenItem });
       }
       return {
         ...gameState,
         clickstats: { ...newClickStats },
         gamestats: { ...newStats },
-        upgrades: [
-          ...newUpgrades,
-          { id: action.value, level: action.currentlevel },
-        ],
+        upgrades: [...newUpgrades],
         inventory: [...newInven],
       };
     }
     case "buyItem": {
-      return { ...gameState };
+      const newStats = { ...stats };
+      const newInven = [...inven];
+      newStats.currentscore -= action.cost;
+      newStats.totalspent += action.cost;
+      const inInventory = newInven.findIndex((x) => x.id == action.value);
+      if (inInventory != -1) {
+        const newInvenItem = { ...newInven[inInventory] };
+        newInvenItem.quantity++;
+        newInven[inInventory] = newInvenItem;
+      } else {
+        const newInvenItem = _gameObjects.shopitems.find(
+          (x) => x.id == action.value
+        );
+        const newCps = { ...newInvenItem.cps };
+        newInven.push({
+          id: action.value,
+          name: newInvenItem.name,
+          quantity: 1,
+          cps: { ...newCps },
+        });
+      }
+      return {
+        ...gameState,
+        gamestats: { ...newStats },
+        inventory: [...newInven],
+      };
     }
     default: {
       throw Error("Unknown action: " + action.type);

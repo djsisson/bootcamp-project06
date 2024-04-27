@@ -5,4 +5,5 @@
   border-bottom-width: 5px;
   border-bottom-style: outset;
   padding: 10px;
+  border-color: var(--bgColor);
 }

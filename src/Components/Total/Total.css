@@ -7,4 +7,5 @@
     border-width: 5px;
     border-style: outset;
     padding: 10px;
+  border-color: var(--bgColor);
   }

@@ -6,7 +6,7 @@ const Reset = () => {
     window.location.reload();
   };
 
-  return <button onClick={onClick}>Reset</button>;
+  return <button className="Reset" onClick={onClick}>Reset</button>;
 };
 
 export default Reset;

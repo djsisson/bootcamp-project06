@@ -5,6 +5,7 @@ const _gameObjects = {
       name: "Weapon",
       description: "<p>Upgrades Click Damage</p>",
       requiredresearch: [],
+      requireditems: [],
       type: 0,
       effectitemid: 0,
       levels: [
@@ -39,6 +40,7 @@ const _gameObjects = {
       name: "Clones",
       description: "<p>Upgrades Clone Damage</p>",
       requiredresearch: [0],
+      requireditems: [],
       type: 1,
       effectitemid: 0,
       levels: [
@@ -73,6 +75,7 @@ const _gameObjects = {
       name: "Crit Chance",
       description: "<p>Click Damage Can Now Critically Hit</p>",
       requiredresearch: [1],
+      requireditems: [],
       type: 0,
       effectitemid: 0,
       levels: [
@@ -107,6 +110,7 @@ const _gameObjects = {
       name: "Refining",
       description: "<p>Further Increase Click Damage</p>",
       requiredresearch: [2],
+      requireditems: [],
       type: 0,
       effectitemid: 0,
       levels: [
@@ -141,6 +145,7 @@ const _gameObjects = {
       name: "Super Clones",
       description: "<p>Upgrades Super Clone Damage</p>",
       requiredresearch: [3],
+      requireditems: [],
       type: 1,
       effectitemid: 1,
       levels: [
@@ -276,32 +281,9 @@ const averageDamage = (obj) => {
   return obj.baseValue * obj.critChance * obj.critDamage + obj.baseValue;
 };
 
-const canBuy = (cost, score, items = [], inven = []) => {
-  let buyItems = true;
-  items.forEach((item) => {
-    let invenItem = inven.find((x) => x.id == item.id);
-    if (invenItem ? invenItem.quantity < item.quantity : true) {
-      buyItems = false;
-    }
-  });
-  if (cost > score) {
-    buyItems = false;
-  }
-  return buyItems;
-};
-
-const hasResearch = (currentResearch = [], requireResearch = []) => {
-  let checkForResearch = requireResearch.filter(
-    (x) => !currentResearch.includes(x)
-  );
-  return checkForResearch.length == 0;
-};
-
 export {
   _gameObjects,
   _gameState,
   calcdamage,
   averageDamage,
-  canBuy,
-  hasResearch,
 };
