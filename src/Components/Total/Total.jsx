@@ -15,10 +15,11 @@ const Total = () => {
 
 
     useEffect(()=>{
+        refOldDisplay.current = refDisplay.current
         const displayInterval = setInterval(()=>{
-            const diff = Math.floor((refDisplay.current - refOldDisplay.current)/8)
+            const diff = Math.floor((refDisplay.current - refOldDisplay.current)/4)
             refOldDisplay.current += diff
-            setDisplayTotal(refOldDisplay.current)
+            setDisplayTotal(Math.round(refOldDisplay.current))
         },100)
         return (()=> clearInterval(displayInterval))
     },[])
