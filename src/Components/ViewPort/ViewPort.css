@@ -14,7 +14,7 @@
   position: relative;
   border-width: 5px;
   border-style: outset;
-  border-color: var(--bgColor);
+  border-color: var(--bgColour);
 }
 
 @keyframes shake {

@@ -3,7 +3,7 @@ const _gameObjects = {
     {
       id: 0,
       name: "Weapon",
-      description: "<p>Upgrades Click Damage</p>",
+      description: "Upgrades Click Damage",
       requiredresearch: [],
       requireditems: [],
       type: 0,
@@ -38,7 +38,7 @@ const _gameObjects = {
     {
       id: 1,
       name: "Clones",
-      description: "<p>Upgrades Clone Damage</p>",
+      description: "Upgrades Clone Damage",
       requiredresearch: [0],
       requireditems: [],
       type: 1,
@@ -73,7 +73,7 @@ const _gameObjects = {
     {
       id: 2,
       name: "Crit Chance",
-      description: "<p>Click Damage Can Now Critically Hit</p>",
+      description: "Click Damage Can Now Critically Hit",
       requiredresearch: [1],
       requireditems: [],
       type: 0,
@@ -108,7 +108,7 @@ const _gameObjects = {
     {
       id: 3,
       name: "Refining",
-      description: "<p>Further Increase Click Damage</p>",
+      description: "Further Increase Click Damage",
       requiredresearch: [2],
       requireditems: [],
       type: 0,
@@ -143,7 +143,7 @@ const _gameObjects = {
     {
       id: 4,
       name: "Super Clones",
-      description: "<p>Upgrades Super Clone Damage</p>",
+      description: "Upgrades Super Clone Damage",
       requiredresearch: [3],
       requireditems: [],
       type: 1,
@@ -180,7 +180,7 @@ const _gameObjects = {
     {
       id: 0,
       name: "Cloning",
-      description: "<p>Unlocks Clones</p>",
+      description: "Unlocks Clones",
       cost: 1,
       requireditems: [],
       requiredtooltip: "",
@@ -189,29 +189,29 @@ const _gameObjects = {
     {
       id: 1,
       name: "Critcal Strike",
-      description: "<p>Unlocks Upgrading Click Damage</p>",
+      description: "Unlocks Upgrading Click Damage",
       cost: 10,
       requireditems: [{ id: 0, quantity: 2 }],
-      requiredtooltip: "<p>2 Clones Required</p>",
+      requiredtooltip: "2 Clones Required",
       requiredresearch: [0],
     },
     {
       id: 2,
       name: "Refining",
-      description: "<p>Further Unlocks Upgrading Click Damage</p>",
+      description: "Further Unlocks Upgrading Click Damage",
       cost: 100,
       requireditems: [{ id: 0, quantity: 5 }],
       requiredresearch: [0],
-      requiredtooltip: "<p>5 Clones Required</p>",
+      requiredtooltip: "5 Clones Required",
     },
     {
       id: 3,
       name: "Super Clones",
-      description: "<p>Unlocks Super Clones</p>",
+      description: "Unlocks Super Clones",
       cost: 1000,
       requireditems: [{ id: 0, quantity: 10 }],
       requiredresearch: [1, 2],
-      requiredtooltip: "<p>10 Clones Required</p>",
+      requiredtooltip: "10 Clones Required",
     },
   ],
   shopitems: [
@@ -235,7 +235,7 @@ const _gameObjects = {
       name: "Super Clone",
       cost: 20,
       requireditems: [{ id: 0, quantity: 10 }],
-      requiredtooltip: "<p>10 Clones Required</p>",
+      requiredtooltip: "10 Clones Required",
       max: 10,
       multiplier: 3,
       requiredresearch: [3],
@@ -250,7 +250,7 @@ const _gameObjects = {
 
 const _gameState = {
   playername: "",
-  theme: "",
+  theme: "aqua",
   gamestats: {
     currentscore: 0,
     totalclicks: 0,

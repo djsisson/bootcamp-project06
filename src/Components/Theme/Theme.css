@@ -1,0 +1,39 @@
+.themebutton {
+    cursor: pointer;
+    font-size: var(--fs1);
+  }
+  .theme-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-size: var(--fs2);
+  }
+  
+  .theme-container:hover .theme-menu {
+    display: flex;
+    flex-direction: column;
+    z-index: 9;
+  }
+  
+  .theme-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: black;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .theme-menu div {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    border: 2px solid transparent;
+  }
+  
+  .theme-menu div:hover {
+    border: 2px solid white;
+  }

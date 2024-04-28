@@ -1,4 +1,5 @@
 import "./Button.css";
+import Tooltip from "../Tooltip/Tooltip.jsx";
 import {
   useGameState,
   useGameStateDispatch,
@@ -15,30 +16,113 @@ const Button = ({ type, x }) => {
   const [canBuy, setCanBuy] = useState(false);
   const [nextLevel, setNextLevel] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [tooltipText, setToolTipText] = useState([]);
   const buttonLabel = useId();
 
   useEffect(() => {
-    if (type == "Inventory") return;
+    let textToDisplay = "";
+    let toolTip = [];
+    switch (type) {
+      case "Research": {
+        if (completed) {
+          textToDisplay = `${x.name} Research Completed`;
+          toolTip = [`${x.name} Completed`];
+        } else {
+          textToDisplay = `${x.name} Research Cost:${x.cost}`;
+          toolTip = [
+            `${x.name}`,
+            `${x.description} Cost:${x.cost}`,
+            `${x.requiredtooltip}`,
+          ];
+        }
+        break;
+      }
+      case "Upgrades": {
+        if (completed) {
+          textToDisplay = `${x.name} Upgrade Completed`;
+          toolTip = [`${x.name} Completed`];
+        } else {
+          textToDisplay = `${x.name} (${nextLevel + 1}) Cost: ${
+            x.levels[nextLevel].cost
+          }`;
+          toolTip = [
+            `${x.name} Upgrade`,
+            `${x.description} Cost: ${x.levels[nextLevel].cost}`,
+          ];
+        }
+        break;
+      }
+      case "Shop": {
+        if (quantity == x.max) {
+          textToDisplay = `${x.name} Max: ${quantity}`;
+          toolTip = [`${x.name} Qty: ${quantity}`];
+        } else {
+          textToDisplay = `${x.name} (${quantity}) Cost: ${
+            x.cost * Math.pow(x.multiplier, quantity)
+          }`;
+          toolTip = [
+            `${x.name}`,
+            `Cost: ${x.cost * Math.pow(x.multiplier, quantity)}`,
+            `${x.requiredtooltip}`,
+          ];
+        }
+        break;
+      }
+      case "Inventory": {
+        textToDisplay = `${x.name} Qty: ${quantity}`;
+        toolTip = [`${x.name} Qty: ${quantity}`];
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+    setDisplayText(textToDisplay);
+    setToolTipText(toolTip);
+  }, [nextLevel, canBuy, completed, quantity]);
+
+  useEffect(() => {
     if (completed) return;
     let canBuy = true;
-    x.requireditems.forEach((item) => {
-      let invenItem = inven.find((x) => x.id == item.id);
-      if (invenItem ? invenItem.quantity < item.quantity : true) {
-        canBuy = false;
-      }
-    });
+    if (type != "Inventory") {
+      x.requireditems.forEach((item) => {
+        let invenItem = inven.find((x) => x.id == item.id);
+        if (invenItem ? invenItem.quantity < item.quantity : true) {
+          canBuy = false;
+        }
+      });
+    }
     let calcCost = 0;
     switch (type) {
       case "Research": {
+        setCompleted(research.includes(x.id));
         calcCost = x.cost;
         break;
       }
       case "Upgrades": {
         calcCost = x.levels[nextLevel].cost;
+        let isCompleted = false;
+        const currentUpgrade = upgrades.find((item) => x.id == item.id);
+        if (currentUpgrade) {
+          isCompleted = currentUpgrade.level == x.levels.length - 1;
+          setNextLevel(currentUpgrade.level + 1);
+        }
+        setCompleted(isCompleted);
         break;
       }
       case "Shop": {
         calcCost = x.cost * Math.pow(x.multiplier, quantity);
+        const currentShopItem = inven.find((item) => x.id == item.id);
+        if (currentShopItem) {
+          if (currentShopItem.quantity == x.max) canBuy = false;
+          setQuantity(currentShopItem.quantity);
+        }
+        break;
+      }
+      case "Inventory": {
+        setQuantity(x.quantity);
+        canBuy = false;
         break;
       }
       default: {
@@ -51,41 +135,7 @@ const Button = ({ type, x }) => {
     setCanBuy(canBuy);
   }, [score, inven, nextLevel, quantity]);
 
-  useEffect(() => {
-    if (type == "Inventory") return;
-    switch (type) {
-      case "Research": {
-        setCompleted(research.includes(x.id));
-        return;
-      }
-      case "Upgrades": {
-        let isCompleted = false;
-        const currentUpgrade = upgrades.find((item) => x.id == item.id);
-        if (currentUpgrade) {
-          isCompleted = currentUpgrade.level == x.levels.length - 1;
-          setNextLevel(currentUpgrade.level + 1);
-        }
-        setCompleted(isCompleted);
-        return;
-      }
-      case "Shop": {
-        let isCompleted = false;
-        const currentShopItem = inven.find((item) => x.id == item.id);
-        if (currentShopItem) {
-          isCompleted = currentShopItem.quantity == x.max;
-          setQuantity(currentShopItem.quantity);
-        }
-        setCompleted(isCompleted);
-        return;
-      }
-      default: {
-        return;
-      }
-    }
-  }, [research, upgrades, inven]);
-
   const onClick = (e) => {
-    setCanBuy(false);
     switch (type) {
       case "Research": {
         dispatch({
@@ -123,21 +173,21 @@ const Button = ({ type, x }) => {
   };
 
   return (
-    <div className="buttonItem">
-      <button
-        id={buttonLabel}
-        title={type}
-        type="button"
-        className={`${type}${canBuy ? " canBuy" : ""}${
-          canBuy ? " completed" : ""
-        }`}
-        onClick={onClick}
-        disabled={completed || !canBuy}
-      ></button>
-      <label htmlFor={buttonLabel}>
-        {x.name}+{canBuy ? "true" : "false"}+{quantity != 0 ? quantity : ""}
-      </label>
-    </div>
+    <Tooltip content={tooltipText} direction="top">
+      <div className="buttonItem">
+        <button
+          id={buttonLabel}
+          title={x.name}
+          type="button"
+          className={`btn${canBuy ? " canBuy" : ""}${
+            completed ? " completed" : ""
+          }`}
+          onClick={onClick}
+          disabled={completed || !canBuy}
+        ></button>
+        <label htmlFor={buttonLabel}>{displayText}</label>
+      </div>
+    </Tooltip>
   );
 };
 

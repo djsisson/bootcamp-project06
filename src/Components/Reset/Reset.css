@@ -1,3 +1,5 @@
 .Reset {
-    padding: 10px
+    padding: 10px;
+    background-color: revert !important;
+    cursor: pointer !important;
 }

@@ -10,11 +10,20 @@
   --fs2: 2rem;
   --fs3: 3rem;
 
-  --clr-1: #052b2f;
-  --clr-2: #073438;
-  --clr-3: #0e4b50;
-  --clr-4: #2d8f85;
-  --clr-5: #637c54;
+  --clr-1: #0e4b50;
+  --clr-2: #2d8f85;
+  --clr-3: #637c54;
+
+  --clr-4: #ff0000;
+  --clr-5: #bb0000;
+  --clr-6: #880000;
+
+  --clr-7: #ffff00;
+  --clr-8: #ffbb00;
+  --clr-9: #ff8800;
+
+  --bgColour:  aqua;
+  
 }
 
 @property --gradient-angle {
@@ -45,7 +54,7 @@ html {
 /* min body height */
 body {
   min-height: 100svh;
-  --bgColor:  aqua;
+  background-color: black;
 }
 
 /* responsive images/videos */

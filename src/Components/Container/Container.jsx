@@ -52,7 +52,7 @@ const Container = ({ type }) => {
     <div className={`${type} container`}>
       <h1>{type}</h1>
       <div>
-        {buttonList.map((x) => 
+        {buttonList.toReversed().map((x) => 
           <Button type={type} x={x} key={x.id} />
         )}
       </div>

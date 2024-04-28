@@ -1,19 +1,50 @@
-button[disabled] {
+.btn.completed {
+  background-color: blue;
+  cursor: not-allowed;
+  display: none;
+}
+
+.buttonItem:has(.btn.completed):hover{
+  cursor: default;
+}
+
+.btn:not(.canBuy) {
   background-color: red;
   cursor: not-allowed;
 }
 
-button:not([disabled]) {
+.buttonItem:has(.btn:not(.canBuy)):hover{
+  cursor: not-allowed;
+}
+
+.btn.canBuy:not(.completed) {
+  background-color: green;
+  border: revert;
+  border-color: green;
   cursor: pointer;
 }
 
-button {
+.buttonItem:has(.btn.canBuy:not(.completed)):hover{
+  cursor: pointer;
+}
+
+.btn.completed {
+  background-color: blue;
+  cursor: not-allowed;
+  visibility: hidden;
+}
+
+.buttonItem:has(.btn.completed):hover{
+  cursor: default;
+}
+
+.btn {
+  background-color: initial;
   padding: 10px;
-  border: revert !important;
   z-index: 3;
 }
 label {
-  cursor: pointer;
+  cursor: inherit;
   flex:1;
   z-index: 3;
 }
@@ -33,22 +64,50 @@ label {
 .buttonItem::after {
   content: "";
   position: absolute;
-  inset: -0.3rem;
+  inset: -0.2rem;
   z-index: -1;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    var(--clr-3),
-    var(--clr-4),
-    var(--clr-5),
-    var(--clr-4),
-    var(--clr-3)
-  );
   border-radius: inherit;
   animation: rotation 5s linear infinite;
 }
 
+.buttonItem:has(.btn.completed)::before,
+.buttonItem:has(.btn.completed)::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-1),
+    var(--clr-2),
+    var(--clr-3),
+    var(--clr-2),
+    var(--clr-1)
+  );
+}
+
+.buttonItem:has(.btn.canBuy:not(.completed))::before,
+.buttonItem:has(.btn.canBuy:not(.completed))::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-7),
+    var(--clr-8),
+    var(--clr-9),
+    var(--clr-8),
+    var(--clr-7)
+  );
+}
+
+.buttonItem:has(.btn:not(.canBuy):not(.completed))::before,
+.buttonItem:has(.btn:not(.canBuy):not(.completed))::after {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--clr-4),
+    var(--clr-5),
+    var(--clr-6),
+    var(--clr-5),
+    var(--clr-4)
+  );
+}
+
 .buttonItem::after {
-  filter: blur(3.5rem);
+  filter: blur(2.5rem);
 }
 
 @keyframes rotation {
@@ -57,5 +116,11 @@ label {
   }
   100% {
     --gradient-angle: 360deg;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .buttonItem{
+    flex-wrap: wrap;
   }
 }

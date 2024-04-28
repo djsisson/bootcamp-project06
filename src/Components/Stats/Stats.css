@@ -3,4 +3,17 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 1rem;
+    flex: 0.5
 }
+
+@media screen and (width < 800px) {
+    .stats{
+        gap: 0.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .stats{
+        gap: 0.1rem;
+    }
+  }

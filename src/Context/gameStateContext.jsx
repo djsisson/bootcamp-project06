@@ -21,7 +21,7 @@ export const GameStateProvider = ({ children }) => {
       </GameStateDispatchContext.Provider>
     </GameStateContext.Provider>
   );
-}
+};
 
 export const useGameState = () => {
   return useContext(GameStateContext);
@@ -69,7 +69,6 @@ const gameStateReducer = (gameState, action) => {
   const clickstats = gameState.clickstats;
 
   switch (action.type) {
-
     case "click": {
       const newStats = { ...stats };
       newStats.totalclicks += 1;
@@ -124,7 +123,8 @@ const gameStateReducer = (gameState, action) => {
       }
       if (action.effecttype == 0) {
         upgradeItem(newClickStats, action.level.upgrade);
-        newStats.averageclickvalue = averageDamage(newClickStats);
+        newStats.averageclickvalue =
+          Math.floor(averageDamage(newClickStats) * 100) / 100;
       } else {
         const inInventory = newInven.findIndex((x) => x.id == action.effectid);
         if (inInventory != -1) {
@@ -188,16 +188,23 @@ const gameStateReducer = (gameState, action) => {
 
     case "updateAverage": {
       const newStats = { ...stats };
-      newStats.currentAveragecps = action.value;
+      newStats.currentAveragecps = Math.floor(action.value * 100) / 100;
       return {
         ...gameState,
         gamestats: { ...newStats },
       };
     }
 
+    case "changeTheme" : {
+      return {...gameState, theme: action.value}
+    }
+
+    case "changeName" : {
+      return {...gameState, playername: action.value}
+    }
+
     default: {
       throw Error("Unknown action: " + action.type);
     }
-
   }
 };

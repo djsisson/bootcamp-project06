@@ -3,8 +3,48 @@
   display: flex;
   justify-content: space-between;
   border-top-width: 5px;
-  border-color: var(--bgColor);
+  border-color: var(--bgColour);
   border-top-style: outset;
   padding: 10px;
-
+  align-items: center;
 }
+
+.signature {
+  flex: 0.5;
+  font-size: var(--fs2);
+  font-weight: bold;
+  background: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff8800,
+    #ffff00,
+    #88ff00,
+    #00ff00,
+    #00ff88,
+    #00ffff,
+    #0088ff,
+    #0000ff,
+    #8800ff,
+    #ff00ff,
+    #ff0088,
+    #ff0000 100%
+  );
+  background-size: 50% 100%;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow-scroll 5s linear infinite;
+  text-align: right;
+  width: 50%;
+}
+
+@keyframes rainbow-scroll {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+

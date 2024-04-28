@@ -7,7 +7,7 @@
   border-width: 5px;
   border-style: outset;
   padding: 10px;
-  border-color: var(--bgColor);
+  border-color: var(--bgColour);
   font-size: var(--fs3);
 
 }

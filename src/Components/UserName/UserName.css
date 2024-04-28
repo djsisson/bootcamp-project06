@@ -1,0 +1,51 @@
+.player-name {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+.input-container {
+  position: fixed;
+  top: 10svh;
+  left: 35svw;
+  display: grid;
+  grid-template-columns: 3fr;
+  width: 30svw;
+  color: black;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.input-container > input {
+  color: white;
+  background-color: 255, 255, 255, 1;
+  grid-area: 1 /1 / 1 / 3;
+}
+
+.player-name {
+  font-size: var(--fs2);
+  font-style: italic;
+}
+.label-name{
+    position: fixed;
+    width:10svw;
+    color: var(--bgColour);
+    visibility: hidden;
+}
+.input-name{
+    width: 30svw;
+}
+.editcontainer {
+  position: relative;
+}
+
+.editname {
+  width: 30px;
+  aspect-ratio: 1;
+  border-bottom: 1px solid transparent;
+  content: url("../../assets/editname.svg");
+  color: var(--bgColour);
+}
+.editname:hover {
+  border-bottom: 1px solid var(--bgColour);
+  cursor: pointer;
+}
