@@ -3,16 +3,21 @@ import "./Tooltip.css";
 
 const Tooltip = (props) => {
   let timeout;
+  let display
   const [active, setActive] = useState(false);
 
   const showTip = () => {
     timeout = setTimeout(() => {
       setActive(true);
     }, props.delay || 400);
+    display = setTimeout (()=>{
+      hideTip()
+    },3000)
   };
 
   const hideTip = () => {
-    clearInterval(timeout);
+    clearTimeout(timeout);
+    clearTimeout(display);
     setActive(false);
   };
 
